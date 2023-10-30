@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<!-- Coding by CodingLab | www.codinglabweb.com -->
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/style.css') }}"
+        />
+
+        <link
+            href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+        />
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"
+        ></script>
+
+        <title>Predict Stroke</title>
+    </head>
+
+    <body>
+        <nav class="sidebar close">
+            <header>
+                <div class="image-text">
+                    <div class="text logo-text">
+                        <span class="name">Occupational disease forecasting</span>
+                        <span class="profession">With DGCNN model</span>
+                    </div>
+                </div>
+
+                <i class="bx bx-chevron-right toggle"></i>
+            </header>
+            <form action="/chooseFeature" method="post">
+                <div class="menu-bar">
+                    <div class="menu">
+                        <li class="nav-link">
+                            <span class="text nav-text">Choose features</span>
+                        </li>
+                            {% for feature in features %}
+                            <li class="nav-link">
+                                <span class="text nav-text">
+                                    <input
+                                        type="checkbox"
+                                        class="btn-check"
+                                        id="btn-check-2-outlined {{feature.id}}"
+                                        name="selectfeature"
+                                        value={{feature.name}}
+                                        autocomplete="off"
+                                    />
+                                    <label
+                                        class="btn btn-outline-secondary"
+                                        for="btn-check-2-outlined {{feature.id}}"
+                                        >{{feature.name_viet}} ({{'%0.2f'%feature.corr|float|abs}})</label
+                                    >
+                                </span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <li class="nav-link">
+                            <span class="text nav-text">
+                                <button type="submit" class="btn btn-success">
+                                    Submit
+                                </button>
+                            </span>
+                        </li>
+                    </div>
+                </div>
+            </form>
+        </nav>
+
+        <section class="home">
+            <div class="text">{{message}}</div>
+            {% if selectedfeature != null and selectedfeature|length > 0 %}
+            <div class="text">DGCNN Model</div>
+            <div class="text">Model accuracy: 98.66%</div>
+            <div class="container w-50">
+                <div class="text text-center">Medical report form</div>
+                <div class="card">
+                    <div class="card-body">
+                        <form action="/submit" method="post">
+                            {% for feature in selectedfeature %}
+                            {% if 'choice' in feature %}
+                            <fieldset class="form-group m-1">
+                                <div class="input-group">
+                                    <span class="input-group-addon fixed-width"
+                                        >{{feature.name_viet}} &nbsp</span
+                                    >
+                                    <div class="w-75">
+                                        <select class = "float-end fixed-width-2"
+                                            name="{{feature.name}}"
+                                            class="selectpicker form-control">
+                                            {% for o in feature.choice %}
+                                            <option value="{{o}}">{{o}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            {% else %}
+                            <fieldset class="form-group m-1">
+                                <div class="input-group">
+                                    <span class="input-group-addon fixed-width"
+                                        >{{feature.name_viet}} &nbsp</span
+                                    >
+                                    <div class="w-75">
+                                        {% if feature.name in ['id','sdt'] %}
+                                        <input class = 'float-end fixed-width-2'
+                                            type="number"
+                                            step="0"
+                                            value="{{feature.val|int}}"
+                                            class="form-control"
+                                            name="{{feature.name}}"
+                                            required="required"
+                                        />
+                                        {% elif feature.common|float(-1.0) != -1.0 %}
+                                        <input class = 'float-end fixed-width-2'
+                                            type="number"
+                                            step="0.01"
+                                            value="{{feature.val}}"
+                                            class="form-control"
+                                            name="{{feature.name}}"
+                                            required="required"
+                                        />
+                                        {% else %}
+                                        <input class = 'float-end fixed-width-2'
+                                            type="text"
+                                            value="{{feature.val}}"
+                                            class="form-control"
+                                            name="{{feature.name}}"
+                                            required="required"
+                                        />
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </fieldset>
+                            {% endif %}
+                            {% endfor %}
+                            <button type="submit" class="btn btn-success">
+                                Submit
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <label>Chuẩn đoán: {{ketqua}}</label>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </section>
+
+        <script>
+            const body = document.querySelector("body"),
+                sidebar = body.querySelector("nav"),
+                toggle = body.querySelector(".toggle"),
+                searchBtn = body.querySelector(".search-box"),
+                modeSwitch = body.querySelector(".toggle-switch"),
+                modeText = body.querySelector(".mode-text");
+
+            toggle.addEventListener("click", () => {
+                sidebar.classList.toggle("close");
+            });
+        </script>
+    </body>
+</html>
