@@ -70,6 +70,12 @@
                         </ul>
                         <li class="nav-link">
                             <span class="text nav-text">
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" onclick="check_all(this)">
+                                <label class="form-check-label" for="flexSwitchCheckChecked">Select all</label>
+                            </span>
+                        </li>
+                        <li class="nav-link">
+                            <span class="text nav-text">
                                 <button type="submit" class="btn btn-success">
                                     Submit
                                 </button>
@@ -169,10 +175,17 @@
                 searchBtn = body.querySelector(".search-box"),
                 modeSwitch = body.querySelector(".toggle-switch"),
                 modeText = body.querySelector(".mode-text");
-
+            
             toggle.addEventListener("click", () => {
                 sidebar.classList.toggle("close");
             });
+
+            function check_all(source) {
+                checkboxes = document.querySelectorAll('input[name="selectfeature"]');
+                checkboxes.forEach((checkbox) => {
+                    checkbox.checked = source.checked;
+                });
+            }
         </script>
     </body>
 </html>

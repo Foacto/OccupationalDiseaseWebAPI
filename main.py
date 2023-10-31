@@ -20,7 +20,7 @@ def chooseFeatureM():
     global selected_feature
 
     selected_feature_list = request.form.getlist('selectfeature')
-    print(selected_feature_list)
+    # print(selected_feature_list)
 
     if len(selected_feature_list) == 0:
         return render_template("home.html", 

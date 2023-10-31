@@ -45,14 +45,13 @@ class DGCNN():
             self.df = pd.concat([self.df, df_dictionary], ignore_index=True)
             # self.df = self.df.append(new_row, ignore_index=True)
 
-        print(self.df)
-        # print(self.df.head())
+        # print(self.df)
 
         #Pre-processing data
         self.encoded(self.df)
         self.normalize(self.df)
 
-        print(self.df)
+        # print(self.df)
 
         #Create graph
         graph_X = self.create_graph_list(self.df)
