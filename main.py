@@ -85,4 +85,4 @@ def submit():
 if __name__ == '__main__':
     print("Api run!")
     # load_DGCNN_model(model=model)
-    app.run(debug=True)
+    app.run(debug=False)

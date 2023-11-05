@@ -5,13 +5,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    font-family: "Times New Roman", Times, serif;
 }
 
 :root {
     /* ===== Colors ===== */
-    --body-color: #e4e9f7;
-    --sidebar-color: #fff;
+    --body-color: linear-gradient(to top right, #1daee7, #e8d9d9);
+    --sidebar-color: linear-gradient(to bottom right, #e8d9d9, #86d4f3);
     --primary-color: #695cfe;
     --primary-color-light: #f6f5ff;
     --toggle-color: #ddd;
@@ -24,9 +24,11 @@
 }
 
 body {
-    min-height: 100vh;
-    background-color: var(--body-color);
+    /* min-height: 100vh; */
+    height: 100vh;
+    background: var(--body-color);
     transition: var(--tran-05);
+    overflow-y: hidden;
 }
 
 ::selection {
@@ -49,7 +51,7 @@ body.dark {
     position: relative;
     top: 0;
     left: 0;
-    height: 100%;
+    height: 100vh;
     width: 350px;
     padding: 10px 14px;
     background: var(--sidebar-color);
@@ -170,7 +172,9 @@ body.dark .sidebar header .toggle {
 }
 
 .sidebar .menu {
+    height: 70vh;
     margin-top: 0px;
+    overflow-y: scroll;
 }
 
 .sidebar li.search-box {
@@ -225,7 +229,6 @@ body.dark .sidebar li a:hover .text {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow-y: scroll;
 }
 
 .menu-bar::-webkit-scrollbar {
@@ -290,7 +293,7 @@ body.dark .mode .sun-moon i.moon {
     top: 50%;
     left: 5px;
     transform: translateY(-50%);
-    background-color: var(--sidebar-color);
+    background: var(--sidebar-color);
     transition: var(--tran-04);
 }
 
@@ -303,10 +306,11 @@ body.dark .switch::before {
     top: 0;
     top: 0;
     left: 300px;
-    height: 1250%;
-    width: calc(100% - 250px);
-    background-color: var(--body-color);
+    height: 100vh;
+    width: calc(100% - 300px);
+    background: var(--body-color);
     transition: var(--tran-05);
+    overflow-y: scroll;
 }
 
 .home .text {
@@ -318,7 +322,7 @@ body.dark .switch::before {
 
 .sidebar.close ~ .home {
     left: 78px;
-    height: 925vh;
+    height: 100vh;
     width: calc(100% - 78px);
 }
 
@@ -331,5 +335,13 @@ body.dark .home .text {
 }
 
 .fixed-width-2 {
-    width: 350px;
+    width: 300px;
+}
+
+.fixed-width-3 {
+    width: 250px;
+}
+
+.menu::-webkit-scrollbar {
+    display: none;
 }
