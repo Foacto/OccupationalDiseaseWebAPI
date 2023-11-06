@@ -24,7 +24,7 @@ class DGCNN():
         if self.model is None:
             self.model = load_model(MODEL_NAME)
         self.df = pd.read_excel("data.xlsx")
-        self.not_encoded_df = pd.read_excel("Main_data_NotEncoded.xlsx")
+        self.not_encoded_df = pd.read_excel("Main_data_NotEncoded_V2.xlsx")
         super(DGCNN, self).__init__()
     
     def predict(self, data):
