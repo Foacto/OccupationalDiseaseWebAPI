@@ -9,6 +9,7 @@ from sklearn.preprocessing import OrdinalEncoder
 MODEL_NAME = 'model_20231007_ver02_0.7'
 MID_LIST_FILE_NAME = "MID_LIST.pkl"
 COLUMNS_NAME_FILE_NAME = "COLUMNS_NAME.pkl"
+MAX_VALUES_FILE_NAME = "MAX_VALUES.pkl"
 
 class DGCNN():
     model = None
@@ -17,12 +18,12 @@ class DGCNN():
     MID_LIST = None
     original_df = None
     not_encoded_df = None
+    max_values = None
     """docstring for DGCNN."""
     def __init__(self, name):
         if self.model is None:
             self.model = load_model(MODEL_NAME)
-        self.original_df = pd.read_excel("Main_data_fixed_ver08.xlsx")
-        self.df = self.original_df.drop(self.original_df.index)
+        self.df = pd.read_excel("data.xlsx")
         self.not_encoded_df = pd.read_excel("Main_data_NotEncoded.xlsx")
         super(DGCNN, self).__init__()
     
@@ -200,9 +201,12 @@ class DGCNN():
         if self.MID_LIST == None:
             open_file = open(MID_LIST_FILE_NAME, "rb")
             self.MID_LIST = pickle.load(open_file)
+        if self.max_values is None:
+            open_file = open(MAX_VALUES_FILE_NAME, "rb")
+            self.max_values = pickle.load(open_file)
         for column in X.columns:
-            if (self.original_df[column].max() - self.MID_LIST[column]) != 0:
-                X[column] = (X[column] - self.MID_LIST[column])  / (self.original_df[column].max() - self.MID_LIST[column])
+            if (self.max_values[column] - self.MID_LIST[column]) != 0:
+                X[column] = (X[column] - self.MID_LIST[column])  / (self.max_values[column] - self.MID_LIST[column])
 
     def create_graph_list(self, X):
         graph = []
@@ -259,13 +263,12 @@ class DGCNN():
             open_file = open(COLUMNS_NAME_FILE_NAME, "rb")
             self.COLUMNS_NAME = pickle.load(open_file)
         feature_list = []
-        columns = self.original_df.columns
+        columns = self.df.columns
         for i in range(0, len(columns)):
             fet = {}
             fet['name'] = self.COLUMNS_NAME[i]
             fet['col'] = columns[i]
             fet['id'] = i
-            fet['avg'] = round(self.original_df[columns[i]].mean(), 2)
             feature_list.append(fet)
         
         return feature_list
