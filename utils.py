@@ -5,6 +5,7 @@ from stellargraph.mapper import PaddedGraphGenerator
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import OrdinalEncoder
+import gc
 
 MODEL_NAME = 'model_20231007_ver02_0.7'
 MID_LIST_FILE_NAME = "MID_LIST.pkl"
@@ -23,6 +24,14 @@ class DGCNN():
     def __init__(self, name):
         if self.model is None:
             self.model = load_model(MODEL_NAME)
+        if self.MID_LIST == None:
+            open_file = open(MID_LIST_FILE_NAME, "rb")
+            self.MID_LIST = pickle.load(open_file)
+            open_file.close()
+        if self.max_values is None:
+            open_file = open(MAX_VALUES_FILE_NAME, "rb")
+            self.max_values = pickle.load(open_file)
+            open_file.close()
         self.df = pd.read_excel("data.xlsx")
         self.not_encoded_df = pd.read_excel("Main_data_NotEncoded_V2.xlsx")
         super(DGCNN, self).__init__()
@@ -56,7 +65,7 @@ class DGCNN():
             self.df.index,
             symmetric_normalization=False,
         )
-
+        gc.collect()
         return [round(i[0]) for i in self.model.predict(pre_gen)]
     
     def encoded(self, X):
@@ -198,12 +207,6 @@ class DGCNN():
         self.df[encoded_labels] = oe.transform(self.df[encoded_labels])
 
     def normalize(self, X):
-        if self.MID_LIST == None:
-            open_file = open(MID_LIST_FILE_NAME, "rb")
-            self.MID_LIST = pickle.load(open_file)
-        if self.max_values is None:
-            open_file = open(MAX_VALUES_FILE_NAME, "rb")
-            self.max_values = pickle.load(open_file)
         for column in X.columns:
             if (self.max_values[column] - self.MID_LIST[column]) != 0:
                 X[column] = (X[column] - self.MID_LIST[column])  / (self.max_values[column] - self.MID_LIST[column])
@@ -262,6 +265,7 @@ class DGCNN():
         if self.COLUMNS_NAME == None:
             open_file = open(COLUMNS_NAME_FILE_NAME, "rb")
             self.COLUMNS_NAME = pickle.load(open_file)
+            open_file.close()
         feature_list = []
         columns = self.df.columns
         for i in range(0, len(columns)):
