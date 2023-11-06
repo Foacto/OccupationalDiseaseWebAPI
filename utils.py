@@ -8,7 +8,6 @@ from sklearn.preprocessing import OrdinalEncoder
 
 MODEL_NAME = 'model_20231007_ver02_0.7'
 MID_LIST_FILE_NAME = "MID_LIST.pkl"
-ENCODED_LABELS_FILE_NAME = "ENCODED_LABELS.pkl"
 COLUMNS_NAME_FILE_NAME = "COLUMNS_NAME.pkl"
 
 class DGCNN():
@@ -16,20 +15,20 @@ class DGCNN():
     df = None
     COLUMNS_NAME = None
     MID_LIST = None
-    ENCODED_LABELS = None
     original_df = None
     not_encoded_df = None
     """docstring for DGCNN."""
     def __init__(self, name):
         if self.model is None:
             self.model = load_model(MODEL_NAME)
-        self.df = pd.read_excel("data.xlsx")
         self.original_df = pd.read_excel("Main_data_fixed_ver08.xlsx")
+        self.df = self.original_df.drop(self.original_df.index)
         self.not_encoded_df = pd.read_excel("Main_data_NotEncoded.xlsx")
         super(DGCNN, self).__init__()
     
     def predict(self, data):
         self.df.drop(self.df.index, inplace=True)
+        
         # load data to dataframe then normalize + create graph list
         for block in data:
             new_row = {}
@@ -43,15 +42,10 @@ class DGCNN():
                     new_row[col] = np.nan
             df_dictionary = pd.DataFrame([new_row])
             self.df = pd.concat([self.df, df_dictionary], ignore_index=True)
-            # self.df = self.df.append(new_row, ignore_index=True)
-
-        # print(self.df)
 
         #Pre-processing data
         self.encoded(self.df)
         self.normalize(self.df)
-
-        # print(self.df)
 
         #Create graph
         graph_X = self.create_graph_list(self.df)
@@ -61,10 +55,8 @@ class DGCNN():
             self.df.index,
             symmetric_normalization=False,
         )
-        # print(data)
-        # print(new_row)
+
         return [round(i[0]) for i in self.model.predict(pre_gen)]
-        # return "1"
     
     def encoded(self, X):
         #Encode data by hand
@@ -187,8 +179,6 @@ class DGCNN():
 
         encoded_labels = []
         for col in X.columns:
-            # if df[col].dtypes == object:
-            #     encoded_labels.append(col)
             try:
                 X[col] = X[col].astype(float)
             except Exception:
@@ -200,10 +190,8 @@ class DGCNN():
         
         X['sdt'] = X['sdt'].astype(str)
         encoded_labels.append('sdt')
+
         #Encode data by OrdinalEncoder
-        if self.ENCODED_LABELS == None:
-            open_file = open(ENCODED_LABELS_FILE_NAME, "rb")
-            self.ENCODED_LABELS = pickle.load(open_file)
         oe = OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=np.nan)
         oe.fit(self.not_encoded_df[encoded_labels])
         self.df[encoded_labels] = oe.transform(self.df[encoded_labels])
@@ -265,15 +253,6 @@ class DGCNN():
             graph.append(sg)
             
         return graph
-
-    # def get_avgs_list(self):
-    #     avgs_list = []
-    #     for col in self.original_df.columns:
-    #         avgs_list.append(self.original_df[col].mean())
-    #     return avgs_list
-    
-    # def get_column_list(self):
-    #     return self.original_df.columns
     
     def get_feature_list(self):
         if self.COLUMNS_NAME == None:
