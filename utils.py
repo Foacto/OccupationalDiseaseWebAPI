@@ -64,6 +64,7 @@ class DGCNN():
         pre_gen = X_generator.flow(
             self.df.index,
             symmetric_normalization=False,
+            batch_size=1,
         )
         gc.collect()
         return [round(i[0]) for i in self.model.predict(pre_gen)]
