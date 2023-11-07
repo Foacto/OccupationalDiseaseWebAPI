@@ -236,7 +236,7 @@ class DGCNN():
                     source.append(0)
                     target.append(j)
                     value.append(X.iloc[i][j])
-                    indexing.append(j)   
+                    indexing.append(j)
                     
             for j in range(len(relation_ship)):
                 flg = True

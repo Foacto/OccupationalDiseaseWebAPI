@@ -21,13 +21,16 @@
             integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
             crossorigin="anonymous"
         />
+
+        <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"
         ></script>
 
-        <title>Predict Stroke</title>
+        <title>Predict Occupational Disease</title>
     </head>
 
     <body>
@@ -51,6 +54,23 @@
                             {% for feature in features %}
                             <li class="nav-link">
                                 <span class="text nav-text">
+                                    {% if feature.name == 'id' %}
+                                    <input
+                                        type="checkbox"
+                                        class="btn-check"
+                                        id="btn-check-2-outlined {{feature.id}}"
+                                        name="selectfeature"
+                                        value={{feature.name}}
+                                        autocomplete="off"
+                                        disabled 
+                                        checked
+                                    />
+                                    <label
+                                        class="btn btn-outline-secondary fixed-width-3 text-center border-1"
+                                        for="btn-check-2-outlined {{feature.id}}"
+                                        >{{feature.name_viet}} ({{'%0.2f'%feature.corr|float|abs}})</label
+                                    >
+                                    {% else %}
                                     <input
                                         type="checkbox"
                                         class="btn-check"
@@ -64,6 +84,7 @@
                                         for="btn-check-2-outlined {{feature.id}}"
                                         >{{feature.name_viet}} ({{'%0.2f'%feature.corr|float|abs}})</label
                                     >
+                                    {% endif %}
                                 </span>
                             </li>
                             {% endfor %}
@@ -87,9 +108,9 @@
         </nav>
 
         <section class="home">
-            <div class="text">DGCNN Model</div>
-            <div class="text">Model accuracy: 98.66%</div>
-            <div class="text text-center text-uppercase font-weight-bold">{{message}}</div>
+            <div class="text fw-bold">DGCNN Model</div>
+            <div class="text fw-bold">Model accuracy: 98.66%</div>
+            <div class="text text-center text-uppercase fw-bold">{{message}}</div>
             {% if selectedfeature != null and selectedfeature|length > 0 %}
             <div class="container" style="width: 600px;">
                 {% if ketqua != null %}
