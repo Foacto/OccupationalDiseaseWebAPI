@@ -172,9 +172,29 @@ body.dark .sidebar header .toggle {
 }
 
 .sidebar .menu {
-    height: 70vh;
+    height: 65vh;
     margin-top: 0px;
     overflow-y: scroll;
+}
+
+.work-menu {
+    position: absolute;
+    visibility: hidden;
+}
+
+.habit-menu {
+    position: absolute;
+    visibility: hidden;
+}
+
+.medical-menu {
+    position: absolute;
+    visibility: hidden;
+}
+
+.symptom-menu {
+    position: absolute;
+    visibility: hidden;
 }
 
 .sidebar li.search-box {

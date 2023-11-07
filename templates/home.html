@@ -22,7 +22,10 @@
             crossorigin="anonymous"
         />
 
-        <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link
+            rel="icon"
+            href="{{ url_for('static', filename='favicon.ico') }}"
+        />
 
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -38,8 +41,10 @@
             <header>
                 <div class="image-text">
                     <div class="text logo-text">
-                        <span class="name">Occupational disease forecasting</span>
-                        <span class="profession">With DGCNN model</span>
+                        <span class="name"
+                            >Occupational disease forecasting</span
+                        >
+                        <span class="profession">With DGCNN Model</span>
                     </div>
                 </div>
 
@@ -47,58 +52,186 @@
             </header>
             <form action="/chooseFeature" method="post">
                 <div class="menu-bar">
+                    <div class="nav-link text-center">
+                        <span class="text nav-text">Choose Features</span>
+                    </div>
                     <div class="nav-link">
-                        <span class="text nav-text">Choose features</span>
+                        <span class="text nav-text">
+                            <label for="category-select">Choose Category</label>
+                            <select
+                                class="fixed-width-1 rounded-3 border-1"
+                                id="category-select"
+                                data-value="Patient's information"
+                            >
+                                <option value="patient-m">
+                                    Patient's information
+                                </option>
+                                <option value="work-m">Working history</option>
+                                <option value="habit-m">Patient's habit</option>
+                                <option value="medical-m">Medical data</option>
+                                <option value="symptom-m">
+                                    Disease symptom
+                                </option>
+                            </select>
+                        </span>
                     </div>
-                    <div class="menu">
-                            {% for feature in features %}
-                            <li class="nav-link">
-                                <span class="text nav-text">
-                                    {% if feature.name == 'id' %}
-                                    <input
-                                        type="checkbox"
-                                        class="btn-check"
-                                        id="btn-check-2-outlined {{feature.id}}"
-                                        name="selectfeature"
-                                        value={{feature.name}}
-                                        autocomplete="off"
-                                        disabled 
-                                        checked
-                                    />
-                                    <label
-                                        class="btn btn-outline-secondary fixed-width-3 text-center border-1"
-                                        for="btn-check-2-outlined {{feature.id}}"
-                                        >{{feature.name_viet}} ({{'%0.2f'%feature.corr|float|abs}})</label
-                                    >
-                                    {% else %}
-                                    <input
-                                        type="checkbox"
-                                        class="btn-check"
-                                        id="btn-check-2-outlined {{feature.id}}"
-                                        name="selectfeature"
-                                        value={{feature.name}}
-                                        autocomplete="off"
-                                    />
-                                    <label
-                                        class="btn btn-outline-secondary fixed-width-3 text-center border-1"
-                                        for="btn-check-2-outlined {{feature.id}}"
-                                        >{{feature.name_viet}} ({{'%0.2f'%feature.corr|float|abs}})</label
-                                    >
-                                    {% endif %}
-                                </span>
-                            </li>
-                            {% endfor %}
-                        </ul>
+                    <div class="menu patient-menu">
+                        {% for feature in features %} {% if feature.name in
+                        patient %}
+                        <li class="nav-link">
+                            <span class="text nav-text">
+                                {% if feature.name == 'id' %}
+                                <input
+                                    type="checkbox"
+                                    class="btn-check"
+                                    id="btn-check-2-outlined {{feature.id}}"
+                                    name="selectfeature"
+                                    value="{{feature.name}}"
+                                    autocomplete="off"
+                                    disabled
+                                    checked
+                                />
+                                <label
+                                    class="btn btn-outline-secondary fixed-width-3 text-center border-1"
+                                    for="btn-check-2-outlined {{feature.id}}"
+                                    >{{feature.name_viet}}
+                                    ({{'%0.2f'%feature.corr|float|abs}})</label
+                                >
+                                {% else %}
+                                <input
+                                    type="checkbox"
+                                    class="btn-check"
+                                    id="btn-check-2-outlined {{feature.id}}"
+                                    name="selectfeature"
+                                    value="{{feature.name}}"
+                                    autocomplete="off"
+                                />
+                                <label
+                                    class="btn btn-outline-secondary fixed-width-3 text-center border-1"
+                                    for="btn-check-2-outlined {{feature.id}}"
+                                    >{{feature.name_viet}}
+                                    ({{'%0.2f'%feature.corr|float|abs}})</label
+                                >
+                                {% endif %}
+                            </span>
+                        </li>
+                        {% endif %} {% endfor %}
                     </div>
+                    <div class="menu work-menu">
+                        {% for feature in features %} {% if feature.name in work
+                        %}
+                        <li class="nav-link">
+                            <span class="text nav-text">
+                                <input
+                                    type="checkbox"
+                                    class="btn-check"
+                                    id="btn-check-2-outlined {{feature.id}}"
+                                    name="selectfeature"
+                                    value="{{feature.name}}"
+                                    autocomplete="off"
+                                />
+                                <label
+                                    class="btn btn-outline-secondary fixed-width-3 text-center border-1"
+                                    for="btn-check-2-outlined {{feature.id}}"
+                                    >{{feature.name_viet}}
+                                    ({{'%0.2f'%feature.corr|float|abs}})</label
+                                >
+                            </span>
+                        </li>
+                        {% endif %} {% endfor %}
+                    </div>
+                    <div class="menu habit-menu">
+                        {% for feature in features %} {% if feature.name in
+                        habit %}
+                        <li class="nav-link">
+                            <span class="text nav-text">
+                                <input
+                                    type="checkbox"
+                                    class="btn-check"
+                                    id="btn-check-2-outlined {{feature.id}}"
+                                    name="selectfeature"
+                                    value="{{feature.name}}"
+                                    autocomplete="off"
+                                />
+                                <label
+                                    class="btn btn-outline-secondary fixed-width-3 text-center border-1"
+                                    for="btn-check-2-outlined {{feature.id}}"
+                                    >{{feature.name_viet}}
+                                    ({{'%0.2f'%feature.corr|float|abs}})</label
+                                >
+                            </span>
+                        </li>
+                        {% endif %} {% endfor %}
+                    </div>
+                    <div class="menu medical-menu">
+                        {% for feature in features %} {% if feature.name in
+                        medical %}
+                        <li class="nav-link">
+                            <span class="text nav-text">
+                                <input
+                                    type="checkbox"
+                                    class="btn-check"
+                                    id="btn-check-2-outlined {{feature.id}}"
+                                    name="selectfeature"
+                                    value="{{feature.name}}"
+                                    autocomplete="off"
+                                />
+                                <label
+                                    class="btn btn-outline-secondary fixed-width-3 text-center border-1"
+                                    for="btn-check-2-outlined {{feature.id}}"
+                                    >{{feature.name_viet}}
+                                    ({{'%0.2f'%feature.corr|float|abs}})</label
+                                >
+                            </span>
+                        </li>
+                        {% endif %} {% endfor %}
+                    </div>
+                    <div class="menu symptom-menu">
+                        {% for feature in features %} {% if feature.name in
+                        symptom %}
+                        <li class="nav-link">
+                            <span class="text nav-text">
+                                <input
+                                    type="checkbox"
+                                    class="btn-check"
+                                    id="btn-check-2-outlined {{feature.id}}"
+                                    name="selectfeature"
+                                    value="{{feature.name}}"
+                                    autocomplete="off"
+                                />
+                                <label
+                                    class="btn btn-outline-secondary fixed-width-3 text-center border-1"
+                                    for="btn-check-2-outlined {{feature.id}}"
+                                    >{{feature.name_viet}}
+                                    ({{'%0.2f'%feature.corr|float|abs}})</label
+                                >
+                            </span>
+                        </li>
+                        {% endif %} {% endfor %}
+                    </div>
+
                     <div class="nav-link text-center fixed-width-3 mx-2">
                         <span class="text nav-text">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" onclick="check_all(this)">
-                            <label class="form-check-label" for="flexSwitchCheckChecked">Select all</label>
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="flexSwitchCheckChecked"
+                                onclick="check_all(this)"
+                            />
+                            <label
+                                class="form-check-label"
+                                for="flexSwitchCheckChecked"
+                                >Select all</label
+                            >
                         </span>
                     </div>
                     <div class="nav-link text-center fixed-width-3 mx-2">
                         <span class="text nav-text">
-                            <button type="submit" class="btn btn-success" style="width: 150px;">
+                            <button
+                                type="submit"
+                                class="btn btn-success"
+                                style="width: 150px"
+                            >
                                 TO PREDICT
                             </button>
                         </span>
@@ -110,32 +243,40 @@
         <section class="home">
             <div class="text fw-bold">DGCNN Model</div>
             <div class="text fw-bold">Model accuracy: 98.66%</div>
-            <div class="text text-center text-uppercase fw-bold">{{message}}</div>
+            <div class="text text-center text-uppercase fw-bold">
+                {{message}}
+            </div>
             {% if selectedfeature != null and selectedfeature|length > 0 %}
-            <div class="container" style="width: 600px;">
+            <div class="container" style="width: 600px">
                 {% if ketqua != null %}
-                <div class="text text-center text-uppercase font-weight-bold">Diagnostic result</div>
+                <div class="text text-center text-uppercase font-weight-bold">
+                    Diagnostic result
+                </div>
                 <div class="card mt-1 rounded-3">
                     <div class="card-body">
                         <label>Chẩn đoán: {{ketqua}}</label>
                     </div>
                 </div>
                 {% endif %}
-                <div class="text text-center text-uppercase font-weight-bold">Medical report form</div>
+                <div class="text text-center text-uppercase font-weight-bold">
+                    Medical report form
+                </div>
                 <div class="card rounded-3">
                     <div class="card-body">
                         <form action="/submit" method="post">
-                            {% for feature in selectedfeature %}
-                            {% if 'choice' in feature %}
+                            {% for feature in selectedfeature %} {% if 'choice'
+                            in feature %}
                             <fieldset class="form-group m-1">
                                 <div class="input-group">
                                     <span class="input-group-addon fixed-width"
                                         >{{feature.name_viet}} &nbsp</span
                                     >
                                     <div class="w-75">
-                                        <select class = "float-end fixed-width-2 rounded-3 border-1"
+                                        <select
+                                            class="float-end fixed-width-2 rounded-3 border-1"
                                             name="{{feature.name}}"
-                                            class="selectpicker form-control">
+                                            class="selectpicker form-control"
+                                        >
                                             {% for o in feature.choice %}
                                             <option value="{{o}}">{{o}}</option>
                                             {% endfor %}
@@ -151,7 +292,8 @@
                                     >
                                     <div class="w-75">
                                         {% if feature.name in ['id','sdt'] %}
-                                        <input class = 'float-end fixed-width-2 rounded-3 border-1'
+                                        <input
+                                            class="float-end fixed-width-2 rounded-3 border-1"
                                             type="number"
                                             step="0"
                                             value="{{feature.val|int}}"
@@ -159,8 +301,10 @@
                                             name="{{feature.name}}"
                                             required="required"
                                         />
-                                        {% elif feature.common|float(-1.0) != -1.0 %}
-                                        <input class = 'float-end fixed-width-2 rounded-3 border-1'
+                                        {% elif feature.common|float(-1.0) !=
+                                        -1.0 %}
+                                        <input
+                                            class="float-end fixed-width-2 rounded-3 border-1"
                                             type="number"
                                             step="0.01"
                                             value="{{feature.val}}"
@@ -169,7 +313,8 @@
                                             required="required"
                                         />
                                         {% else %}
-                                        <input class = 'float-end fixed-width-2 rounded-3 border-1'
+                                        <input
+                                            class="float-end fixed-width-2 rounded-3 border-1"
                                             type="text"
                                             value="{{feature.val}}"
                                             class="form-control"
@@ -180,10 +325,12 @@
                                     </div>
                                 </div>
                             </fieldset>
-                            {% endif %}
-                            {% endfor %}
+                            {% endif %} {% endfor %}
                             <div class="text-center mt-3">
-                                <button type="submit" class="btn btn-success fixed-width-3">
+                                <button
+                                    type="submit"
+                                    class="btn btn-success fixed-width-3"
+                                >
                                     Submit
                                 </button>
                             </div>
@@ -200,14 +347,49 @@
                 toggle = body.querySelector(".toggle"),
                 searchBtn = body.querySelector(".search-box"),
                 modeSwitch = body.querySelector(".toggle-switch"),
-                modeText = body.querySelector(".mode-text");
-            
+                modeText = body.querySelector(".mode-text"),
+                category = document.getElementById("category-select"),
+                menu_patient = body.querySelector(".patient-menu"),
+                menu_work = body.querySelector(".work-menu"),
+                menu_habit = body.querySelector(".habit-menu"),
+                menu_medical = body.querySelector(".medical-menu"),
+                menu_symptom = body.querySelector(".symptom-menu");
+
+            let current_menu = menu_patient;
+
             toggle.addEventListener("click", () => {
                 sidebar.classList.toggle("close");
             });
 
+            category.addEventListener("change", (e) => {
+                current_menu.style.marginLeft = "-300px";
+                current_menu.style.position = "absolute";
+                switch (category.value) {
+                    case "work-m":
+                        current_menu = menu_work;
+                        break;
+                    case "habit-m":
+                        current_menu = menu_habit;
+                        break;
+                    case "medical-m":
+                        current_menu = menu_medical;
+                        break;
+                    case "symptom-m":
+                        current_menu = menu_symptom;
+                        break;
+                    default:
+                        current_menu = menu_patient;
+                }
+
+                current_menu.style.position = "relative";
+                current_menu.style.marginLeft = "0px";
+                current_menu.style.visibility = "visible";
+            });
+
             function check_all(source) {
-                checkboxes = document.querySelectorAll('input[name="selectfeature"]');
+                checkboxes = document.querySelectorAll(
+                    'input[name="selectfeature"]'
+                );
                 checkboxes.forEach((checkbox) => {
                     checkbox.checked = source.checked;
                 });

@@ -33,7 +33,7 @@ class DGCNN():
             self.max_values = pickle.load(open_file)
             open_file.close()
         self.df = pd.read_excel("data.xlsx")
-        self.not_encoded_df = pd.read_excel("Main_data_NotEncoded_V2.xlsx")
+        self.not_encoded_df = pd.read_excel("Main_data_NotEncoded.xlsx")
         super(DGCNN, self).__init__()
     
     def predict(self, data):
