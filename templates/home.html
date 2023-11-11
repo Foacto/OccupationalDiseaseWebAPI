@@ -261,7 +261,7 @@
                 {{message}}
             </div>
             {% if selectedfeature != null and selectedfeature|length > 0 %}
-            <div class="container" style="width: 70vw">
+            <div class="container" style="width: 700px">
                 {% if ketqua != null %}
                 <div class="text text-center text-uppercase font-weight-bold">
                     Diagnostic result
@@ -275,71 +275,400 @@
                 <div class="text text-center text-uppercase font-weight-bold">
                     Medical report form
                 </div>
-                <div class="card rounded-3 mb-3">
+                <div class="card mt-1 rounded-3">
                     <div class="card-body">
                         <form action="/submit" method="post">
-                            {% for feature in selectedfeature %} {% if 'choice'
-                            in feature %}
-                            <fieldset class="form-group m-1">
-                                <div class="input-group">
-                                    <span class="input-group-addon fixed-width"
-                                        >{{feature.name_viet}} &nbsp</span
+                            <ul class="nav nav-tabs item-tab" id="myTabs">
+                                <li class="nav-item">
+                                    <a
+                                        class="nav-link active"
+                                        id="ppatient-tab"
+                                        data-bs-toggle="tab"
+                                        href="#ppatient"
+                                        >Patient's data</a
                                     >
-                                    <div class="w-75">
-                                        <select
-                                            class="float-end fixed-width-2 rounded-3 border-1"
-                                            name="{{feature.name}}"
-                                            class="selectpicker form-control"
-                                        >
-                                            {% for o in feature.choice %}
-                                            <option value="{{o}}">{{o}}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            {% else %}
-                            <fieldset class="form-group m-1">
-                                <div class="input-group">
-                                    <span class="input-group-addon fixed-width"
-                                        >{{feature.name_viet}} &nbsp</span
+                                </li>
+                                <li class="nav-item">
+                                    <a
+                                        class="nav-link"
+                                        id="pworkplace-tab"
+                                        data-bs-toggle="tab"
+                                        href="#pworkplace"
+                                        >Workplace data</a
                                     >
-                                    <div class="w-75">
-                                        {% if feature.name in ['id','sdt'] %}
-                                        <input
-                                            class="float-end fixed-width-2 rounded-3 border-1"
-                                            type="number"
-                                            step="0"
-                                            value="{{feature.val|int}}"
-                                            class="form-control"
-                                            name="{{feature.name}}"
-                                            required="required"
-                                        />
-                                        {% elif feature.common|float(-1.0) !=
-                                        -1.0 %}
-                                        <input
-                                            class="float-end fixed-width-2 rounded-3 border-1"
-                                            type="number"
-                                            step="0.01"
-                                            value="{{feature.val}}"
-                                            class="form-control"
-                                            name="{{feature.name}}"
-                                            required="required"
-                                        />
-                                        {% else %}
-                                        <input
-                                            class="float-end fixed-width-2 rounded-3 border-1"
-                                            type="text"
-                                            value="{{feature.val}}"
-                                            class="form-control"
-                                            name="{{feature.name}}"
-                                            required="required"
-                                        />
-                                        {% endif %}
+                                </li>
+                                <li class="nav-item">
+                                    <a
+                                        class="nav-link"
+                                        id="phabit-tab"
+                                        data-bs-toggle="tab"
+                                        href="#phabit"
+                                        >Habit data</a
+                                    >
+                                </li>
+                                <li class="nav-item">
+                                    <a
+                                        class="nav-link"
+                                        id="pmedical-tab"
+                                        data-bs-toggle="tab"
+                                        href="#pmedical"
+                                        >Medical data</a
+                                    >
+                                </li>
+                                <li class="nav-item">
+                                    <a
+                                        class="nav-link"
+                                        id="psymptom-tab"
+                                        data-bs-toggle="tab"
+                                        href="#psymptom"
+                                        >Symptom data</a
+                                    >
+                                </li>
+                            </ul>
+
+                            <div class="tab-content mt-2">
+                                <div
+                                    class="tab-pane fade show active"
+                                    id="ppatient"
+                                >
+                                    <div class="text-center m-3">
+                                        <h3>Patient's features</h3>
                                     </div>
+                                    {% for feature in selectedfeature %} {% if
+                                    feature.name in patient %} {% if 'choice' in
+                                    feature %}
+                                    <fieldset class="form-group m-1">
+                                        <div class="input-group">
+                                            <span
+                                                class="input-group-addon fixed-width"
+                                                >{{feature.name_viet}}
+                                                &nbsp</span
+                                            >
+                                            <div class="w-75">
+                                                <select
+                                                    class="float-end fixed-width-2 rounded-3 border-1"
+                                                    name="{{feature.name}}"
+                                                    class="selectpicker form-control"
+                                                >
+                                                    {% for o in feature.choice
+                                                    %}
+                                                    <option value="{{o}}">
+                                                        {{o}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    {% else %}
+                                    <fieldset class="form-group m-1">
+                                        <div class="input-group">
+                                            <span
+                                                class="input-group-addon fixed-width"
+                                                >{{feature.name_viet}}
+                                                &nbsp</span
+                                            >
+                                            <div class="w-75">
+                                                {% if feature.name in
+                                                ['id','sdt'] %}
+                                                <input
+                                                    class="float-end fixed-width-2 rounded-3 border-1"
+                                                    type="number"
+                                                    step="0"
+                                                    value="{{feature.val|int}}"
+                                                    class="form-control"
+                                                    name="{{feature.name}}"
+                                                    required="required"
+                                                />
+                                                {% elif
+                                                feature.common|float(-1.0) !=
+                                                -1.0 %}
+                                                <input
+                                                    class="float-end fixed-width-2 rounded-3 border-1"
+                                                    type="number"
+                                                    step="0.01"
+                                                    value="{{feature.val}}"
+                                                    class="form-control"
+                                                    name="{{feature.name}}"
+                                                    required="required"
+                                                />
+                                                {% else %}
+                                                <input
+                                                    class="float-end fixed-width-2 rounded-3 border-1"
+                                                    type="text"
+                                                    value="{{feature.val}}"
+                                                    class="form-control"
+                                                    name="{{feature.name}}"
+                                                    required="required"
+                                                />
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    {% endif %} {% endif %} {% endfor %}
                                 </div>
-                            </fieldset>
-                            {% endif %} {% endfor %}
+                                <div class="tab-pane fade" id="pworkplace">
+                                    <div class="text-center m-3">
+                                        <h3>Workplace features</h3>
+                                    </div>
+                                    {% for feature in selectedfeature %} {% if
+                                    feature.name in work %} {% if 'choice' in
+                                    feature %}
+                                    <fieldset class="form-group m-1">
+                                        <div class="input-group">
+                                            <span
+                                                class="input-group-addon fixed-width"
+                                                >{{feature.name_viet}}
+                                                &nbsp</span
+                                            >
+                                            <div class="w-75">
+                                                <select
+                                                    class="float-end fixed-width-2 rounded-3 border-1"
+                                                    name="{{feature.name}}"
+                                                    class="selectpicker form-control"
+                                                >
+                                                    {% for o in feature.choice
+                                                    %}
+                                                    <option value="{{o}}">
+                                                        {{o}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    {% else %}
+                                    <fieldset class="form-group m-1">
+                                        <div class="input-group">
+                                            <span
+                                                class="input-group-addon fixed-width"
+                                                >{{feature.name_viet}}
+                                                &nbsp</span
+                                            >
+                                            <div class="w-75">
+                                                {% if feature.common|float(-1.0)
+                                                != -1.0 %}
+                                                <input
+                                                    class="float-end fixed-width-2 rounded-3 border-1"
+                                                    type="number"
+                                                    step="0.01"
+                                                    value="{{feature.val}}"
+                                                    class="form-control"
+                                                    name="{{feature.name}}"
+                                                    required="required"
+                                                />
+                                                {% else %}
+                                                <input
+                                                    class="float-end fixed-width-2 rounded-3 border-1"
+                                                    type="text"
+                                                    value="{{feature.val}}"
+                                                    class="form-control"
+                                                    name="{{feature.name}}"
+                                                    required="required"
+                                                />
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    {% endif %} {% endif %} {% endfor %}
+                                </div>
+                                <div class="tab-pane fade" id="phabit">
+                                    <div class="text-center m-3">
+                                        <h3>Habit features</h3>
+                                    </div>
+                                    {% for feature in selectedfeature %} {% if
+                                    feature.name in habit %} {% if 'choice' in
+                                    feature %}
+                                    <fieldset class="form-group m-1">
+                                        <div class="input-group">
+                                            <span
+                                                class="input-group-addon fixed-width"
+                                                >{{feature.name_viet}}
+                                                &nbsp</span
+                                            >
+                                            <div class="w-75">
+                                                <select
+                                                    class="float-end fixed-width-2 rounded-3 border-1"
+                                                    name="{{feature.name}}"
+                                                    class="selectpicker form-control"
+                                                >
+                                                    {% for o in feature.choice
+                                                    %}
+                                                    <option value="{{o}}">
+                                                        {{o}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    {% else %}
+                                    <fieldset class="form-group m-1">
+                                        <div class="input-group">
+                                            <span
+                                                class="input-group-addon fixed-width"
+                                                >{{feature.name_viet}}
+                                                &nbsp</span
+                                            >
+                                            <div class="w-75">
+                                                {% if feature.common|float(-1.0)
+                                                != -1.0 %}
+                                                <input
+                                                    class="float-end fixed-width-2 rounded-3 border-1"
+                                                    type="number"
+                                                    step="0.01"
+                                                    value="{{feature.val}}"
+                                                    class="form-control"
+                                                    name="{{feature.name}}"
+                                                    required="required"
+                                                />
+                                                {% else %}
+                                                <input
+                                                    class="float-end fixed-width-2 rounded-3 border-1"
+                                                    type="text"
+                                                    value="{{feature.val}}"
+                                                    class="form-control"
+                                                    name="{{feature.name}}"
+                                                    required="required"
+                                                />
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    {% endif %} {% endif %} {% endfor %}
+                                </div>
+                                <div class="tab-pane fade" id="pmedical">
+                                    <div class="text-center m-3">
+                                        <h3>Medical features</h3>
+                                    </div>
+                                    {% for feature in selectedfeature %} {% if
+                                    feature.name in medical %} {% if 'choice' in
+                                    feature %}
+                                    <fieldset class="form-group m-1">
+                                        <div class="input-group">
+                                            <span
+                                                class="input-group-addon fixed-width"
+                                                >{{feature.name_viet}}
+                                                &nbsp</span
+                                            >
+                                            <div class="w-75">
+                                                <select
+                                                    class="float-end fixed-width-2 rounded-3 border-1"
+                                                    name="{{feature.name}}"
+                                                    class="selectpicker form-control"
+                                                >
+                                                    {% for o in feature.choice
+                                                    %}
+                                                    <option value="{{o}}">
+                                                        {{o}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    {% else %}
+                                    <fieldset class="form-group m-1">
+                                        <div class="input-group">
+                                            <span
+                                                class="input-group-addon fixed-width"
+                                                >{{feature.name_viet}}
+                                                &nbsp</span
+                                            >
+                                            <div class="w-75">
+                                                {% if feature.common|float(-1.0)
+                                                != -1.0 %}
+                                                <input
+                                                    class="float-end fixed-width-2 rounded-3 border-1"
+                                                    type="number"
+                                                    step="0.01"
+                                                    value="{{feature.val}}"
+                                                    class="form-control"
+                                                    name="{{feature.name}}"
+                                                    required="required"
+                                                />
+                                                {% else %}
+                                                <input
+                                                    class="float-end fixed-width-2 rounded-3 border-1"
+                                                    type="text"
+                                                    value="{{feature.val}}"
+                                                    class="form-control"
+                                                    name="{{feature.name}}"
+                                                    required="required"
+                                                />
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    {% endif %} {% endif %} {% endfor %}
+                                </div>
+                                <div class="tab-pane fade" id="psymptom">
+                                    <div class="text-center m-3">
+                                        <h3>Symptom features</h3>
+                                    </div>
+                                    {% for feature in selectedfeature %} {% if
+                                    feature.name in symptom %} {% if 'choice' in
+                                    feature %}
+                                    <fieldset class="form-group m-1">
+                                        <div class="input-group">
+                                            <span
+                                                class="input-group-addon fixed-width"
+                                                >{{feature.name_viet}}
+                                                &nbsp</span
+                                            >
+                                            <div class="w-75">
+                                                <select
+                                                    class="float-end fixed-width-2 rounded-3 border-1"
+                                                    name="{{feature.name}}"
+                                                    class="selectpicker form-control"
+                                                >
+                                                    {% for o in feature.choice
+                                                    %}
+                                                    <option value="{{o}}">
+                                                        {{o}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    {% else %}
+                                    <fieldset class="form-group m-1">
+                                        <div class="input-group">
+                                            <span
+                                                class="input-group-addon fixed-width"
+                                                >{{feature.name_viet}}
+                                                &nbsp</span
+                                            >
+                                            <div class="w-75">
+                                                {% if feature.common|float(-1.0)
+                                                != -1.0 %}
+                                                <input
+                                                    class="float-end fixed-width-2 rounded-3 border-1"
+                                                    type="number"
+                                                    step="0.01"
+                                                    value="{{feature.val}}"
+                                                    class="form-control"
+                                                    name="{{feature.name}}"
+                                                    required="required"
+                                                />
+                                                {% else %}
+                                                <input
+                                                    class="float-end fixed-width-2 rounded-3 border-1"
+                                                    type="text"
+                                                    value="{{feature.val}}"
+                                                    class="form-control"
+                                                    name="{{feature.name}}"
+                                                    required="required"
+                                                />
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    {% endif %} {% endif %} {% endfor %}
+                                </div>
+                            </div>
+
                             <div class="text-center mt-3">
                                 <button
                                     type="submit"

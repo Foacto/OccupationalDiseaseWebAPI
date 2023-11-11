@@ -34,17 +34,523 @@
         <title>Features information</title>
     </head>
     <body>
-        <div class="topnav">
-            <a class="box-link active" href="{{ url_for('home') }}">Home</a>
-            <a class="box-link" href="{{ url_for('feature_information') }}"
-                >Features</a
-            >
-            <a class="box-link" href="#contact">Contact</a>
-            <a class="box-link" href="#about">About</a>
-        </div>
-        <div class="container" style="width: 80vw">
-            <div class="card m-3 rounded-3">
-                <div class="card-body">Features description</div>
+        <div class="feature-description">
+            <div class="topnav">
+                <a class="box-link active" href="{{ url_for('home') }}">Home</a>
+                <a class="box-link" href="{{ url_for('feature_information') }}"
+                    >Features</a
+                >
+                <a class="box-link" href="#contact">Contact</a>
+                <a class="box-link" href="#about">About</a>
+            </div>
+            <div class="container" style="width: 80vw">
+                <div class="card m-3 rounded-3">
+                    <div class="card-body text-center fw-bold">
+                        <h1>Features description</h1>
+                    </div>
+                    <div class="container">
+                        <div class="context">
+                            <h3 style="display: inline">T</h3>
+                            rang web này sử dụng các trường thông tin được khai
+                            báo trong phiếu bệnh của bệnh nhân bao gồm các
+                            trường thông tin liên quan tới thông tin cá nhân,
+                            chỉ số cơ thể, nơi làm việc, đặc trưng môi trường
+                            làm việc, thói quen hàng ngày và các thông tin khác
+                            để chẩn đoán xem liệu đối tượng có mắc bệnh nghề
+                            nghiệp hay không dựa vào model AI đã được huấn
+                            luyện.
+                            <br />
+                            Dữ liệu cần thiết để model dự đoán kết quả được mô
+                            tả như sau:
+                        </div>
+                        <div class="mt-3">
+                            <ul class="list-group">
+                                <li
+                                    class="list-group-item d-flex justify-content-between align-items-center"
+                                >
+                                    <div class="container">
+                                        <h5>
+                                            Các thông tin liên quan tới bệnh
+                                            nhân (Patient's information)
+                                            <span
+                                                class="badge bg-primary rounded-pill float-end"
+                                                >{{patient|length}}</span
+                                            >
+                                        </h5>
+                                        <div class="context">
+                                            <ul>
+                                                <li>ID: mã số của bệnh nhân</li>
+                                                <li>
+                                                    Tỉnh: Tỉnh mà bệnh nhân sinh
+                                                    sống
+                                                </li>
+                                                <li>Giới tính: Nam/Nữ</li>
+                                                <li>
+                                                    Năm sinh: năm sinh của bệnh
+                                                    nhân
+                                                </li>
+                                                <li>
+                                                    SĐT: số điện thoại của bệnh
+                                                    nhân
+                                                </li>
+                                                <li>
+                                                    Cao: chiều cao bệnh nhân
+                                                </li>
+                                                <li>
+                                                    Cân nặng: cân nặng bệnh nhân
+                                                </li>
+                                                <li>
+                                                    Huyết áp tối đa: dao động 90
+                                                    - 140 mmHg
+                                                </li>
+                                                <li>
+                                                    Huyết áp tối thiểu: dao động
+                                                    60 - 90 mmHg
+                                                </li>
+                                                <li>
+                                                    Mạch: Cảm giác đập của tim
+                                                    khi ta sờ tay lên thành động
+                                                    mạch ở sát xương (Dao động
+                                                    60 - 80 lần/phút)
+                                                </li>
+                                                <li>
+                                                    Thể lực: mức thể lực của
+                                                    bệnh nhân (Theo thông tư
+                                                    liên tịch 16/2016/TTLT-
+                                                    BYT-BQP)
+                                                </li>
+                                                <li>
+                                                    Lồng ngực: Cân đối/Không cân
+                                                    đối
+                                                </li>
+                                                <li>
+                                                    Khoang liên sườn: kích cỡ
+                                                    khoang liên sườn
+                                                </li>
+                                                <li>rungthan: rung thận?</li>
+                                                <li>rungt(1->6): ?</li>
+                                                <li>rungg(1->6): ?</li>
+                                                <li>go: Gõ phổi</li>
+                                                <li>goduc(1->6): Gõ đục</li>
+                                                <li>riraopn: ?</li>
+                                                <li>ran: tiếng ran phế quản</li>
+                                                <li>Ran ẩm: Có/Không</li>
+                                                <li>Ran nổ: Có/Không</li>
+                                                <li>Ran rít: Có/Không</li>
+                                                <li>Ran ngáy: Có/Không</li>
+                                                <li>
+                                                    vtam(1->6): VT ẩm (Có/Không)
+                                                </li>
+                                                <li>
+                                                    vtno(1->6): VT nổ (Có/Không)
+                                                </li>
+                                                <li>
+                                                    vtrit(1->6): VT rít
+                                                    (Có/Không)
+                                                </li>
+                                                <li>
+                                                    vtngay(1->6): VT ngáy
+                                                    (Có/Không)
+                                                </li>
+                                                <li>
+                                                    Chất lượng phim: chất lượng
+                                                    film chụp của bệnh nhân
+                                                </li>
+                                                <li>Kết quả: kết quả chụp?</li>
+                                                <li>
+                                                    Mật độ tổn thương: mật độ
+                                                    tổn thương của bệnh nhân (hô
+                                                    hấp?) (n/1)
+                                                </li>
+                                                <li>
+                                                    Kích thước tổn thương: kích
+                                                    thước tổn thương của bệnh
+                                                    nhân (hô hấp?)
+                                                </li>
+                                                <li>
+                                                    Tổn thương khác: Tổn thương
+                                                    hô hấp? khác
+                                                </li>
+                                                <li>
+                                                    Kết hôn: Tình trạng kết hôn
+                                                    của bệnh nhân
+                                                </li>
+                                                <li>A12: ?</li>
+                                                <li>B1: ?</li>
+                                                <li>B2: ?</li>
+                                                <li>B3: ?</li>
+                                                <li>B8: ?</li>
+                                                <li>B9: ?</li>
+                                                <li>B10: ?</li>
+                                                <li>
+                                                    Nơi ở: nơi ở hiện tại của
+                                                    bệnh nhân
+                                                </li>
+                                                <li>B12: ?</li>
+                                                <li>C1: ?</li>
+                                                <li>C2: ?</li>
+                                                <li>C3: ?</li>
+                                                <li>C4: ?</li>
+                                                <li>C5: ?</li>
+                                                <li>C6: ?</li>
+                                                <li>C8: ?</li>
+                                                <li>C9: ?</li>
+                                                <li>C10: ?</li>
+                                                <li>C11: ?</li>
+                                                <li>C12: ?</li>
+                                                <li>D1: ?</li>
+                                                <li>D3: ?</li>
+                                                <li>D5: ?</li>
+                                                <li>D7: ?</li>
+                                                <li>D9: ?</li>
+                                                <li>D10: ?</li>
+                                                <li>D11: ?</li>
+                                                <li>D12: ?</li>
+                                                <li>D12_nam: ?</li>
+                                                <li>D13: ?</li>
+                                                <li>D13_nam: ?</li>
+                                                <li>D14: ?</li>
+                                                <li>D15: ?</li>
+                                                <li>F6: ?</li>
+                                                <li>F7: ?</li>
+                                                <li>F8: ?</li>
+                                                <li>F9: ?</li>
+                                                <li>F11: ?</li>
+                                                <li>
+                                                    Nguồn tin: Nguồn tin tức
+                                                    biết đến chương trình chẩn
+                                                    đoán bệnh nghề nghiệp này
+                                                </li>
+                                                <li>
+                                                    fvclt: FVC lý tưởng (Dao
+                                                    động 3 - 5 L)
+                                                </li>
+                                                <li>
+                                                    fvctt: FVC thực tế (Dao động
+                                                    3 - 5 L)
+                                                </li>
+                                                <li>
+                                                    fev1lt: FEV1 lý tưởng (Dao
+                                                    động 3 - 5 L)
+                                                </li>
+                                                <li>
+                                                    fev1tt: FEV1 thực tế (Dao
+                                                    động 3 - 5 L)
+                                                </li>
+                                                <li>
+                                                    fvc: Dung tích sống gắng
+                                                    sức, lượng khí tối đa mà
+                                                    bệnh nhân có thể thở ra hết
+                                                    sức sau khí hít vào hết sức,
+                                                    FVC bình thường > 80% (fvctt
+                                                    / fvclt)
+                                                </li>
+                                                <li>
+                                                    fev1: thể tích khí thở ra
+                                                    trong giây đầu tiên, FEV1
+                                                    bình thường >80% (fev1lt /
+                                                    fev1lt)
+                                                </li>
+                                                <li>
+                                                    gaenler: Gaensler = FEV1/FVC
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li
+                                    class="list-group-item d-flex justify-content-between align-items-center"
+                                >
+                                    <div class="container">
+                                        <h5>
+                                            Thông tin về môi trường làm việc và
+                                            lịch sử làm việc (Working history)
+                                            <span
+                                                class="badge bg-primary rounded-pill float-end"
+                                                >{{work|length}}</span
+                                            >
+                                        </h5>
+                                        <div class="context">
+                                            <ul>
+                                                <li>
+                                                    Công việc: công việc hiện
+                                                    tại
+                                                </li>
+                                                <li>
+                                                    Phân xưởng: phân xưởng đang
+                                                    làm
+                                                </li>
+                                                <li>
+                                                    Tuổi nghề: tuổi nghề công
+                                                    việc hiện tại
+                                                </li>
+                                                <li>
+                                                    Nămpx: Năm px (năm làm tại
+                                                    phân xưởng?)
+                                                </li>
+                                                <li>
+                                                    Công việc 5 năm: Có làm công
+                                                    việc trên 5 năm không
+                                                </li>
+                                                <li>
+                                                    Công việc 1: Công việc đầu
+                                                    tiên làm
+                                                </li>
+                                                <li>
+                                                    Thời gian 1: Thời gian làm
+                                                    công việc 1
+                                                </li>
+                                                <li>
+                                                    Công việc 2: Công việc thứ 2
+                                                    làm
+                                                </li>
+                                                <li>
+                                                    Thời gian 2: Thời gian làm
+                                                    công việc 2
+                                                </li>
+                                                <li>
+                                                    Sản xuất: công việc sản xuất
+                                                    ra gì
+                                                </li>
+                                                <li>A9a: ?</li>
+                                                <li>A9b: ?</li>
+                                                <li>
+                                                    Hợp đồng: loại hợp đồng lao
+                                                    động
+                                                </li>
+                                                <li>
+                                                    Hợp đồng thời gian: Hợp đồng
+                                                    quy định thời gian làm việc
+                                                    tại công xưởng
+                                                </li>
+                                                <li>
+                                                    Mức độ nguy hiểm: mức độ
+                                                    nguy hiểm của công việc
+                                                </li>
+                                                <li>
+                                                    Dễ mặc: đồ bảo hộ có dễ mặc
+                                                    không
+                                                </li>
+                                                <li>E3: ?</li>
+                                                <li>E5: ?</li>
+                                                <li>E6: ?</li>
+                                                <li>E7: ?</li>
+                                                <li>F3: ?</li>
+                                                <li>
+                                                    Mũ: mức độ thường xuyên phải
+                                                    đeo mũ bảo hộ
+                                                </li>
+                                                <li>
+                                                    Ủng: mức độ thường xuyên
+                                                    phải đeo ủng
+                                                </li>
+                                                <li>
+                                                    Khẩu trang: mức độ thường
+                                                    xuyên phải đeo khẩu trang
+                                                </li>
+                                                <li>
+                                                    Găng: mức độ thường xuyên
+                                                    phải đeo găng bảo hộ
+                                                </li>
+                                                <li>
+                                                    BHLD: mức độ thường xuyên
+                                                    phải sử dụng bảo hộ lao động
+                                                </li>
+                                                <li>
+                                                    Kính: mức độ thường xuyên
+                                                    phải đeo kính bảo hộ
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li
+                                    class="list-group-item d-flex justify-content-between align-items-center"
+                                >
+                                    <div class="container">
+                                        <h5>
+                                            Thói quen sống của bệnh nhân
+                                            (Patient's habit)
+                                            <span
+                                                class="badge bg-primary rounded-pill float-end"
+                                                >{{habit|length}}</span
+                                            >
+                                        </h5>
+                                        <div class="context">
+                                            <ul>
+                                                <li>
+                                                    Hút thuốc: Bệnh nhân có hút
+                                                    thuốc không
+                                                </li>
+                                                <li>
+                                                    Số lượng thuốc: Bệnh nhân
+                                                    mỗi lần hút bao nhiêu thuốc
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li
+                                    class="list-group-item d-flex justify-content-between align-items-center"
+                                >
+                                    <div class="container">
+                                        <h5>
+                                            Thông tin y tế của bệnh nhân
+                                            (Medical data)
+                                            <span
+                                                class="badge bg-primary rounded-pill float-end"
+                                                >{{medical|length}}</span
+                                            >
+                                        </h5>
+                                        <div class="context">
+                                            <ul>
+                                                <li>
+                                                    Tiền sử hô hấp: bệnh nhân có
+                                                    tiền sử mắc bệnh hô hấp
+                                                    không
+                                                </li>
+                                                <li>
+                                                    Bệnh hô hấp: bệnh hô hấp mắc
+                                                    phải
+                                                </li>
+                                                <li>
+                                                    Tiền sử hô hấp: bệnh nhân có
+                                                    tiền sử mắc bệnh nội (bên
+                                                    trong) không
+                                                </li>
+                                                <li>
+                                                    Tiền sử hô hấp: bệnh nhân có
+                                                    tiền sử mắc bệnh ngoại (bên
+                                                    ngoài) không
+                                                </li>
+                                                <li>
+                                                    Bnn cụ thể: bệnh nghề nghiệp
+                                                    cụ thể mắc phải
+                                                </li>
+                                                <li>Năm: năm đi khám</li>
+                                                <li>
+                                                    Số bảo hiểm: Có số bảo hiểm
+                                                    không
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li
+                                    class="list-group-item d-flex justify-content-between align-items-center"
+                                >
+                                    <div class="container">
+                                        <h5>
+                                            Các triệu trứng bệnh của bệnh nhân
+                                            (Disease symptom)
+                                            <span
+                                                class="badge bg-primary rounded-pill float-end"
+                                                >{{symptom|length}}</span
+                                            >
+                                        </h5>
+                                        <div class="context">
+                                            <ul>
+                                                <li>Ho: có bị ho hay không</li>
+                                                <li>
+                                                    Thời gian ho: thời điểm ho
+                                                    trong ngày
+                                                </li>
+                                                <li>
+                                                    Tần suất ho: tần suất ho của
+                                                    bệnh nhân
+                                                </li>
+                                                <li>
+                                                    Khạc đờm: có khạc đờm hay
+                                                    không
+                                                </li>
+                                                <li>
+                                                    Loại đờm: loại đờm khạc ra
+                                                </li>
+                                                <li>
+                                                    Thời gian khạc đờm: thời
+                                                    điểm khạc đờm trong ngày
+                                                </li>
+                                                <li>
+                                                    Khó thở: có khó thở hay
+                                                    không
+                                                </li>
+                                                <li>
+                                                    Mật độ khó thở: khó thở khi
+                                                    nào
+                                                </li>
+                                                <li>
+                                                    Thời gian khó thở: thời điểm
+                                                    khó thở trong ngày
+                                                </li>
+                                                <li>
+                                                    Đau ngực: có đau ngực hay
+                                                    không
+                                                </li>
+                                                <li>
+                                                    Vị trí đau: vị trí đau ngực
+                                                </li>
+                                                <li>
+                                                    Đau lan: có đau lan sang
+                                                    xung quanh không
+                                                </li>
+                                                <li>Kiểu đau: đau như nào</li>
+                                                <li>
+                                                    Biểu hiện: biểu hiện của cơn
+                                                    đau
+                                                </li>
+                                                <li>
+                                                    Thời gian đau: Đau trong bao
+                                                    lâu (giờ)
+                                                </li>
+                                                <li>
+                                                    Yếu tố đau: Đau khi nào, tác
+                                                    nhân gây dau ngực
+                                                </li>
+                                                <li>
+                                                    Yếu tố đau khác: Tác nhân
+                                                    gây đau khác danh sách phổ
+                                                    biến
+                                                </li>
+                                                <li>
+                                                    Yếu tố tăng: yếu tố gây
+                                                    tăng/giảm cơn đau
+                                                </li>
+                                                <li>
+                                                    Chảy mũi: có bị chảy nước
+                                                    mũi không
+                                                </li>
+                                                <li>
+                                                    Khàn: có bị khàn giọng không
+                                                </li>
+                                                <li>
+                                                    Khò khè: có bị khò khè không
+                                                </li>
+                                                <li>
+                                                    Dấu hiệu khác: Các dấu hiệu
+                                                    bị bệnh khác
+                                                </li>
+                                                <li>
+                                                    Mệt mỏi: có cảm thấy mệt mỏi
+                                                    không
+                                                </li>
+                                                <li>
+                                                    Sụt cân: có bị sụt cân không
+                                                </li>
+                                                <li>
+                                                    Số cân sụt: Số kg bị sụt
+                                                </li>
+                                                <li>
+                                                    Thời gian sụt: Thời gian sụt
+                                                    cân (giờ)
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </body>

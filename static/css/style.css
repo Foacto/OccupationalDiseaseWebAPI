@@ -400,3 +400,22 @@ body.dark .home .text {
     background-color: #04aa6d;
     color: var(--primary-color-light);
 }
+
+.item-tab a {
+    font-size: 17px;
+    color: var(--text-color);
+}
+
+.item-tab a.active {
+    background-color: #04aa6d !important;
+    color: var(--primary-color-light) !important;
+}
+
+.context {
+    font-size: 16px;
+}
+
+.feature-description {
+    height: 100vh;
+    overflow-y: scroll;
+}
