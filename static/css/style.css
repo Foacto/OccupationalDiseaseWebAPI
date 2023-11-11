@@ -17,6 +17,7 @@
     --primary-color-light: #f6f5ff;
     --toggle-color: #ddd;
     --text-color: #707070;
+    --border-color: #131212;
     /* ====== Transition ====== */
     --tran-03: all 0.2s ease;
     --tran-03: all 0.3s ease;
@@ -415,7 +416,11 @@ body.dark .home .text {
     font-size: 16px;
 }
 
-.feature-description {
+.other-context {
     height: 100vh;
     overflow-y: scroll;
+}
+
+.list-group-item {
+    border: 2px solid var(--border-color) !important;
 }

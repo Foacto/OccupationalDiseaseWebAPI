@@ -28,12 +28,11 @@ patient_features = ['id','tinh','hoten','gioitinh','namsinh','sdt','cao','can','
 work_features = ['cviec','pxuong','tuoinghe','nampx','cv5nam','cviec1','tgian1','cviec2','tgian2',
                  'A7','A9a','A9b','A10','A11','E1','E2','E3','E5','E6','E7','F3','F4mu','F4ung',
                  'F4KhauTrang','F4gang','F4BHLD','F4Kinh']
-habit_features = ['hutthuoc','slthuoc','']
+habit_features = ['hutthuoc','slthuoc']
 medical_history_features = ['tiensuhh','benhhh','tsnoi','tsngoai','bnncuthe','nam','sobh',]
 symptom_features = ['ho','tdho','tsho','n1','khacdom','loaidom','tdkhacdo','khotho','mdkhotho',
                     'tdkhotho','daunguc','vitridau','daulan','tcdau','n2','tgdau','ytodau','n3','ytotang',
-                    'chaymui','khan','khokhe','dhkhac','metmoi','sutcan','socansut','tgsut',
-                    '']
+                    'chaymui','khan','khokhe','dhkhac','metmoi','sutcan','socansut','tgsut']
 
 @app.route('/chooseFeature', methods=['POST'])
 def chooseFeatureM():
@@ -69,7 +68,16 @@ def home():
 
 @app.route('/feature_information', methods=['GET', 'POST'])
 def feature_information():
-    return render_template('feature_description.html')
+    return render_template('feature_description.html', 
+                           patient = patient_features, work = work_features, habit = habit_features, medical = medical_history_features, symptom = symptom_features)
+
+@app.route('/about', methods=['GET', 'POST'])
+def about():
+    return render_template('about.html')
+
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    return render_template('contact.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
