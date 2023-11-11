@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Coding by CodingLab | www.codinglabweb.com -->
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -53,7 +52,13 @@
             <form action="/chooseFeature" method="post">
                 <div class="menu-bar">
                     <div class="nav-link text-center">
-                        <span class="text nav-text">Choose Features</span>
+                        <span class="text nav-text"
+                            ><a
+                                class="hidden-link"
+                                href="{{ url_for('feature_information') }}"
+                                >Choose Features</a
+                            ></span
+                        >
                     </div>
                     <div class="nav-link">
                         <span class="text nav-text">
@@ -241,13 +246,22 @@
         </nav>
 
         <section class="home">
+            <div class="topnav">
+                <a class="box-link active" href="{{ url_for('home') }}">Home</a>
+                <a class="box-link" href="{{ url_for('feature_information') }}"
+                    >Features</a
+                >
+                <a class="box-link" href="#contact">Contact</a>
+                <a class="box-link" href="#about">About</a>
+            </div>
+
             <div class="text fw-bold">DGCNN Model</div>
             <div class="text fw-bold">Model accuracy: 98.66%</div>
             <div class="text text-center text-uppercase fw-bold">
                 {{message}}
             </div>
             {% if selectedfeature != null and selectedfeature|length > 0 %}
-            <div class="container" style="width: 600px">
+            <div class="container" style="width: 70vw">
                 {% if ketqua != null %}
                 <div class="text text-center text-uppercase font-weight-bold">
                     Diagnostic result
@@ -261,7 +275,7 @@
                 <div class="text text-center text-uppercase font-weight-bold">
                     Medical report form
                 </div>
-                <div class="card rounded-3">
+                <div class="card rounded-3 mb-3">
                     <div class="card-body">
                         <form action="/submit" method="post">
                             {% for feature in selectedfeature %} {% if 'choice'

@@ -60,11 +60,16 @@ def chooseFeatureM():
     patient = patient_features, work = work_features, habit = habit_features, medical = medical_history_features, symptom = symptom_features,
     selectedfeature = selected_feature)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/home', methods=['GET', 'POST'])
 def home():
     return render_template("home.html", features = feature_list,
                            patient = patient_features, work = work_features, habit = habit_features, medical = medical_history_features, symptom = symptom_features,
                            message = 'Please select desired input information!')
+
+@app.route('/feature_information', methods=['GET', 'POST'])
+def feature_information():
+    return render_template('feature_description.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
