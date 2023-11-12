@@ -1,12 +1,12 @@
 from flask import Flask, request, render_template
-from utils import DGCNN
+from utils import get_feature_list, load_DGCNN_model, model_predict, save_message
 import json
 import pickle
 import numpy as np
 
 app = Flask(__name__)
 
-model = DGCNN("model")
+model = load_DGCNN_model()
 
 #Web params
 FEATURES_FILE_NAME = "FEATURE_INFORMATION.pkl"
@@ -30,7 +30,7 @@ work_features = ['cviec','pxuong','tuoinghe','nampx','cv5nam','cviec1','tgian1',
                  'F4KhauTrang','F4gang','F4BHLD','F4Kinh']
 habit_features = ['hutthuoc','slthuoc']
 medical_history_features = ['tiensuhh','benhhh','tsnoi','tsngoai','bnncuthe','nam','sobh',]
-symptom_features = ['ho','tdho','tsho','n1','khacdom','loaidom','tdkhacdo','khotho','mdkhotho',
+symptom_features = ['ho','tdho','tsho','khacdom','loaidom','tdkhacdo','khotho','mdkhotho',
                     'tdkhotho','daunguc','vitridau','daulan','tcdau','n2','tgdau','ytodau','n3','ytotang',
                     'chaymui','khan','khokhe','dhkhac','metmoi','sutcan','socansut','tgsut']
 
@@ -85,7 +85,7 @@ def predict():
     if request.data:
         jsn = request.json
         res["success"] = True
-        res["result"] = model.predict(jsn)
+        res["result"] = predict(model, jsn)
     return json.dumps(res, ensure_ascii=False)
 
 @app.route('/submit', methods=['POST'])
@@ -116,15 +116,20 @@ def submit():
         
         input_data[0][feature['name']] = value
     
-    kq = model.predict(input_data)
-    if kq[0] == 1:
-        kq = 'Mắc bệnh nghề nghiệp'
-    else:
-        kq = 'Không mắc bệnh nghề nghiệp'
     return render_template("home.html", 
     features = feature_list,
     patient = patient_features, work = work_features, habit = habit_features, medical = medical_history_features, symptom = symptom_features,
-    selectedfeature = selected_feature, ketqua = kq)
+    selectedfeature = selected_feature, ketqua = model_predict(model, input_data))
+
+@app.route('/contact_send', methods=['POST'])
+def contact_send():
+    email = request.form.get('email')
+    name = request.form.get('name')
+    message = request.form.get('message')
+
+    save_message(email, name, message)
+
+    return render_template('contact.html', message = 'Send successful!')
 
 if __name__ == '__main__':
     print("Api run!")
