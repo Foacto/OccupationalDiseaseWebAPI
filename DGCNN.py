@@ -219,7 +219,7 @@ class DGCNN():
                         ['hutthuoc','slthuoc'],['tiensuhh','benhhh'],['ho','tdho','tsho'],
                         ['khacdom','loaidom','tdkhacdo'],['khotho','mdkhotho','tdkhotho'],
                         ['daunguc','vitridau','daulan','tcdau','tgdau','ytodau'],
-                        ['sutcan','socansut','tgsut'],['fvclt','fev1lt']]
+                        ['sutcan','socansut','tgsut'],['fvc','fev1']]
         
         for tmp_i in range(len(relation_ship)):
             for tmp_j in range(len(relation_ship[tmp_i])):
