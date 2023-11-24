@@ -24,16 +24,16 @@ class DGCNN():
     def __init__(self, name):
         if self.model is None:
             self.model = load_model(MODEL_NAME)
-        if self.MID_LIST == None:
-            open_file = open(MID_LIST_FILE_NAME, "rb")
-            self.MID_LIST = pickle.load(open_file)
-            open_file.close()
-        if self.max_values is None:
-            open_file = open(MAX_VALUES_FILE_NAME, "rb")
-            self.max_values = pickle.load(open_file)
-            open_file.close()
+        # if self.MID_LIST == None:
+        #     open_file = open(MID_LIST_FILE_NAME, "rb")
+        #     self.MID_LIST = pickle.load(open_file)
+        #     open_file.close()
+        # if self.max_values is None:
+        #     open_file = open(MAX_VALUES_FILE_NAME, "rb")
+        #     self.max_values = pickle.load(open_file)
+        #     open_file.close()
         self.df = pd.read_excel("data.xlsx")
-        self.not_encoded_df = pd.read_excel("Main_data_NotEncoded.xlsx")
+        # self.not_encoded_df = pd.read_excel("Main_data_NotEncoded.xlsx")
         super(DGCNN, self).__init__()
     
     def predict(self, data):
