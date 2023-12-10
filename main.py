@@ -134,4 +134,4 @@ def contact_send():
 if __name__ == '__main__':
     print("Api run!")
     # load_DGCNN_model(model=model)
-    app.run(debug=False)
+    app.run(host='0.0.0.0', port=5000 , debug=False)
